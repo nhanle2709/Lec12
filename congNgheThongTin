@@ -1,0 +1,57 @@
+public class congNgheThongTin extends SV{
+    private double java ,css,html;
+    public congNgheThongTin(){
+        super();
+        java =css=html = 0;
+    }
+public congNgheThongTin( String maSV, String hoTen, int namSinh, boolean gioiTinh,double java, double css, double html) {
+        super(maSV, hoTen, namSinh, gioiTinh);
+        this.java = java;
+        this.css = css;
+        this.html = html;
+    }
+
+    public double getJava() {
+        return java;
+    }
+
+    public double getCss() {
+        return css;
+    }
+
+    public double getHtml() {
+        return html;
+    }
+
+    public void setJava(double java) {
+        this.java = java;
+    }
+
+    public void setCss(double css) {
+        this.css = css;
+    }
+
+    public void setHtml(double html) {
+        this.html = html;
+    }
+    public double getDiemTB(){
+        return (java*2 + css + html)/4;
+    }
+    public String getHocLuc(){
+        if(getDiemTB()<3.5) return "kem";
+        if(getDiemTB()<5) return "yeu";
+        if(getDiemTB()<6.5) return "trung binh";
+        if(getDiemTB()<8) return "kha";
+        if(getDiemTB()<9) return "gioi";
+        return "xuatsac";
+    }
+    public String toString(){
+        return super.toString()+" "+ getDiemTB()+" "+getHocLuc();
+    }
+    public static void main(String []agrs){
+        congNgheThongTin a = new congNgheThongTin("001","Nguyen Van A",2000,true,8,9,7);
+        System.out.print(a);
+    }
+}
+    
+
