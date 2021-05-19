@@ -1,0 +1,100 @@
+package lop;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class sinhVienKinhTe {
+    private ArrayList<kinhTe> a = new ArrayList<kinhTe>();
+    public void docFile(String tenFile){
+        try{
+            File f = new File(tenFile);
+            if(f.exists()){
+                Scanner read = new Scanner(f);
+                while(read.hasNext()){
+                    Scanner line = new Scanner(read.nextLine());
+                    String ma, ht="";
+                    boolean gt;
+                    int namsinh;
+                    double nlkt, mkt;
+                    ma = line.next();
+                    while(!line.hasNextBoolean())
+                        ht = ht + line.next() + " ";
+                    ht = ht.trim();
+                    gt = line.nextBoolean();
+                    namsinh = line.nextInt();
+                    nlkt = line.nextDouble();
+                    mkt = line.nextDouble();
+                    // Tạo thêm 1 constructor mới ở class SinhVien
+                    a.add(new kinhTe(ma, ht,namsinh, gt, nlkt, mkt));
+                }
+            } else {
+                System.out.println("Khong ton tai file");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public double diemTB(kinhTe x){
+        return (x.getNlkt()*2 + x.getMkt())/3;
+    }
+    public double diemTrungBinhChung(){
+        double s = 0;
+        for(kinhTe x: a)
+            s = s + diemTB(x);
+        return s/a.size();
+    }
+    public void loaiSvDiemThapHonDiemTBChung(){
+        for(int i=0; i<a.size(); i++)
+            if(diemTB(a.get(i))<diemTrungBinhChung())
+                a.remove(i);
+    }
+    public String hocLuc(kinhTe x){
+        if(diemTB(x)<3.5) return " kem ";
+        if(diemTB(x)<5) return " yeu ";
+        if(diemTB(x)<8) return " kha ";
+        if(diemTB(x)<9) return " gioi ";
+        return " xuatsac ";
+    }
+    public void xuat(String noiDung){
+        System.out.println(noiDung);
+        for(int i=0; i<a.size(); i++)
+            System.out.println(a.get(i) + " TB:" + diemTB(a.get(i)) + hocLuc(a.get(i)));
+    }
+    public void sapXepGiamDanTheoDiemTB(){
+        for(int i=0; i<a.size()-1; i++)
+            for(int j=i+1; j<a.size(); j++)
+                if(diemTB(a.get(i))<diemTB(a.get(j))){
+                    kinhTe x = a.get(i);
+                    a.set(i, a.get(j));
+                    a.set(j, x);
+                }
+    }
+    public void xacDinhViThuCuaMoiSinhVien(){
+        sapXepGiamDanTheoDiemTB();
+        int j=1;
+        System.out.println(a.get(0) + " vi thu 1");
+        for(int i=1; i<a.size(); i++)
+            if(diemTB(a.get(i))==diemTB(a.get(i-1)))
+                System.out.println(a.get(i) + " vi thu " + j);
+            else{
+                System.out.println(a.get(i) + " vi thu " + (i+1));
+                j = i+1;
+            }
+    }
+    public void output(){
+        xuat("Mang sinh vien kinh te: ");
+        System.out.println("Diem TB sv Kinh te = " + diemTrungBinhChung());
+        loaiSvDiemThapHonDiemTBChung();
+        xuat("Loai sv diem thap hon diem TB chung: ");
+        sapXepGiamDanTheoDiemTB();
+        xuat("Sap xep giam dan theo diem TB: ");
+        System.out.println("Vi thu cua moi sinh vien: ");
+        xacDinhViThuCuaMoiSinhVien();
+    }
+    public static void main(String[] args) {
+        sinhVienKinhTe a = new sinhVienKinhTe();
+        a.docFile("D:\\SinhVienKinhTe.txt");
+        a.output();
+    }
+}
