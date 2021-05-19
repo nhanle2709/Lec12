@@ -1,0 +1,5 @@
+001 Le Van nam true 2002 8 9.2
+002 Tran Be true 2001 5 4.5
+003 Le Thi Loan false 2002 8 9.2
+004 Nguyen Tran Nam Vang false 2003 6 8.8
+005 Nguyen Tuan Anh true 2000 5 4.5
